@@ -6,8 +6,8 @@ import com.footballgame.control.player2Controls
 import com.footballgame.gameobject.Ball
 import com.footballgame.gameobject.GameObject
 import com.footballgame.gameobject.MatchBall
-import com.footballgame.getResource
-import com.footballgame.timeLeftSecs
+import com.footballgame.util.getResource
+import com.footballgame.util.timeLeftSecs
 import com.sun.javafx.geom.Vec2f
 import javafx.animation.AnimationTimer
 import javafx.application.Application
@@ -50,7 +50,7 @@ class Game : Application() {
         const val FIRST_THIRD = WIDTH / 3.0
         const val SECOND_THIRD = WIDTH * 2.0 / 3.0
 
-        private const val MATCH_DURATION_SECS = 20// 5*60
+        private const val MATCH_DURATION_SECS = 5 * 60
 
         private const val GOAL_TOP = 270
         private const val GOAL_BOTTOM = 530

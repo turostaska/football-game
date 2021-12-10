@@ -1,10 +1,7 @@
 package com.footballgame.control
 
-import com.footballgame.div
 import com.footballgame.gameobject.GameObject
-import com.footballgame.normalize
-import com.footballgame.plus
-import com.footballgame.times
+import com.footballgame.util.*
 import com.sun.javafx.geom.Vec2f
 import javafx.scene.input.KeyCode
 
@@ -24,7 +21,7 @@ open class ControlProfile(
     private val actionKeyMapping: Map<Action, KeyCode>,
 ) {
     open fun applyControls(gameObject: GameObject, activeKeys: Set<KeyCode>, deltaTimeSec: Float) {
-        var deltaDistance = Vec2f(0F, 0F)
+        var deltaDistance = ZERO_VEC
 
         for ((action, keyCode) in actionKeyMapping)
             if (keyCode in activeKeys)

@@ -1,8 +1,10 @@
 package com.footballgame.gameobject
 
-import com.footballgame.*
 import com.footballgame.control.ControlProfile
-import com.footballgame.game.Player
+import com.footballgame.util.ZERO_VEC
+import com.footballgame.util.plus
+import com.footballgame.util.times
+import com.footballgame.util.velocityAfterCollision
 import com.sun.javafx.geom.Vec2f
 import javafx.scene.input.KeyCode
 import javafx.scene.shape.Shape
@@ -12,8 +14,8 @@ abstract class GameObject(
     var position: Vec2f,
     private val controlProfile: ControlProfile,
 ) {
-    var momentum = Vec2f(0F, 0F)
-    var actingForce = Vec2f(0F, 0F)
+    var momentum = ZERO_VEC
+    var actingForce = ZERO_VEC
 
     val mass get() = 1 / invMass
     val velocity get() = momentum * invMass
@@ -21,7 +23,7 @@ abstract class GameObject(
     val posX get() = position.x
     val posY get() = position.y
 
-    val startingPosition = position
+    private val startingPosition = position
 
     val alreadyCollidedWith = mutableListOf<GameObject>()
 
