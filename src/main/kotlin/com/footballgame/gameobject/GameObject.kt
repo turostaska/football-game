@@ -2,6 +2,7 @@ package com.footballgame.gameobject
 
 import com.footballgame.*
 import com.footballgame.control.ControlProfile
+import com.footballgame.game.Player
 import com.sun.javafx.geom.Vec2f
 import javafx.scene.input.KeyCode
 import javafx.scene.shape.Shape
@@ -39,14 +40,22 @@ abstract class GameObject(
         other.alreadyCollidedWith += this
     }
 
-    open fun step(deltaTimeNano: Long, activeKeys: Set<KeyCode>, gameObjects: List<GameObject>) {
+    open fun step(
+        deltaTimeNano: Long,
+        activeKeys: Set<KeyCode>,
+        gameObjects: List<GameObject>,
+        playersWhoCanTouchTheBall: Set<GameObject>
+    ) {
         val deltaTimeSec = deltaTimeNano / 1_000_000_000F
 
         gameObjects.forEach { entity ->
             if (entity != this && entity !in alreadyCollidedWith)
-                if (this.collidesWith(entity))
+                if (this.collidesWith(entity)) {
                     this.collideWith(entity)
-            (entity as? MatchBall)?.let { it.wasTouched = true }
+                    (entity as? MatchBall)?.let { it.wasTouched = true }
+                    (this as? MatchBall)?.let { it.wasTouched = true }
+                }
+
         }
 
         position += velocity * deltaTimeSec

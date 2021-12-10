@@ -1,5 +1,6 @@
 package com.footballgame
 
+import com.footballgame.game.Game
 import javafx.application.Application
 
 fun main(args: Array<String>) {

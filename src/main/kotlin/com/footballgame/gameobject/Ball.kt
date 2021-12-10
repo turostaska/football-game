@@ -1,7 +1,6 @@
 package com.footballgame.gameobject
 
-import com.footballgame.Game
-import com.footballgame.Game.Companion.GOAL_RANGE
+import com.footballgame.game.Game
 import com.footballgame.control.ControlProfile
 import com.footballgame.control.PassiveControlProfile
 import com.sun.javafx.geom.Vec2f
@@ -32,10 +31,15 @@ open class Ball(
         }
     }
 
-    override fun step(deltaTimeNano: Long, activeKeys: Set<KeyCode>, gameObjects: List<GameObject>) {
-        super.step(deltaTimeNano, activeKeys, gameObjects)
+    override fun step(
+        deltaTimeNano: Long,
+        activeKeys: Set<KeyCode>,
+        gameObjects: List<GameObject>,
+        playersWhoCanTouchTheBall: Set<GameObject>
+    ) {
+        super.step(deltaTimeNano, activeKeys, gameObjects, playersWhoCanTouchTheBall)
 
-        checkBoundaries()
+        checkBoundaries(playersWhoCanTouchTheBall)
 
         (shape as Circle).let {
             it.centerX = posX.toDouble()
@@ -43,15 +47,20 @@ open class Ball(
         }
     }
 
-    protected open fun checkBoundaries() {
+    protected open fun checkBoundaries(playersWhoCanTouchTheBall: Set<GameObject>) {
         if (posX < Game.LEFT_BORDER + radius && velocity.x < 0F)
                 momentum.x = abs(momentum.x)
-
-        if (posX > Game.RIGHT_BORDER - radius && velocity.x > 0F)
+        else if (posX > Game.RIGHT_BORDER - radius && velocity.x > 0F)
                 momentum.x = -abs(momentum.x)
 
         if (posY > Game.LOWER_BORDER - radius && velocity.y > 0F) momentum.y = -abs(momentum.y)
+        else if (posY < Game.UPPER_BORDER + radius && velocity.y < 0F) momentum.y = abs(momentum.y)
 
-        if (posY < Game.UPPER_BORDER + radius && velocity.y < 0F) momentum.y = abs(momentum.y)
+        if (this !in playersWhoCanTouchTheBall) {
+            if (posX > Game.RIGHT_BORDER/2.0 && posX < Game.SECOND_THIRD + radius && velocity.x < 0F)
+                momentum.x = abs(momentum.x)
+            else if (posX < Game.RIGHT_BORDER/2.0 && posX > Game.FIRST_THIRD - radius && velocity.x > 0F)
+                momentum.x = -abs(momentum.x)
+        }
     }
 }

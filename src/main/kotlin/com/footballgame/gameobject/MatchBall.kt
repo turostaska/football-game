@@ -1,6 +1,6 @@
 package com.footballgame.gameobject
 
-import com.footballgame.Game
+import com.footballgame.game.Game
 import com.sun.javafx.geom.Vec2f
 import kotlin.math.abs
 
@@ -11,7 +11,7 @@ class MatchBall(
 ) : Ball(invMass, position, radius) {
     var wasTouched = false
 
-    override fun checkBoundaries() {
+    override fun checkBoundaries(playersWhoCanTouchTheBall: Set<GameObject>) {
         if (posX < Game.LEFT_BORDER + radius && velocity.x < 0F && posY.toInt() !in Game.GOAL_RANGE)
             momentum.x = abs(momentum.x)
 

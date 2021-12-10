@@ -1,12 +1,9 @@
 package com.footballgame
 
-import com.footballgame.gameobject.Ball
+import com.footballgame.game.Game
 import com.footballgame.gameobject.GameObject
-import com.google.common.base.Stopwatch
 import com.sun.javafx.geom.Vec2f
 import org.apache.commons.lang3.time.StopWatch
-import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.math.*
 
 val ZERO_VEC = Vec2f(0F, 0F)
@@ -49,4 +46,4 @@ fun velocityAfterCollision(what: GameObject, collidingWith: GameObject): Vec2f {
 
 fun Vec2f.lengthSq() = this.length() * this.length()
 
-fun Stopwatch.timeLeftSecs(totalSecs: Int) = max(0, totalSecs - this.elapsed(TimeUnit.SECONDS))
+fun StopWatch.timeLeftSecs(totalSecs: Int) = max(0, totalSecs - this.time / 1000)
